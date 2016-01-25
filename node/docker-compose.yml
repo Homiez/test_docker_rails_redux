@@ -1,0 +1,12 @@
+node:
+  build: .
+  volumes:
+    - .:/myapp
+    - /myapp/node_modules
+  environment:
+    VIRTUAL_HOST: front.docker
+  ports:
+    - "3001:3001"
+    - "3030:3030"
+    - "3050:3050"
+    - "3000:3000"
