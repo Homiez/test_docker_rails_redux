@@ -1,13 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 
+function ttt() {
+  socket.all();
+}
+
 @connect(
-  state => ({user: state.auth.user})
+  state => ({user: state.auth.user, msgs: state.messages})
 )
 export default class Chat extends Component {
 
   static propTypes = {
-    user: PropTypes.object
+    user: PropTypes.object,
+    msgs: PropTypes.object,
   };
 
   state = {
@@ -16,19 +21,32 @@ export default class Chat extends Component {
   };
 
   componentDidMount() {
-		// socketはglobalで、client.jsで作られる
     if (socket) {
+      console.log(this.props);
+      console.log('chat.js componentDidMount');
+      setTimeout(ttt, 2000);
+      // this.props.load();
+    }
+// socketはglobalで、client.jsで作られる
+/*    if (socket) {
       socket.on('msg', this.onMessageReceived);
       setTimeout(() => {
         socket.emit('history', {offset: 0, length: 100});
       }, 100);
     }
+*/
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('chat  componentWillReceiveProp');
+    console.log(nextProps.msgs.data);
+    this.setState({messages: nextProps.msgs.data});
   }
 
   componentWillUnmount() {
-    if (socket) {
-      socket.removeListener('msg', this.onMessageReceived);
-    }
+    // if (socket) {
+    //  socket.removeListener('msg', this.onMessageReceived);
+    // }
   }
 
   onMessageReceived = (data) => {
@@ -43,14 +61,17 @@ export default class Chat extends Component {
     const msg = this.state.message;
 
     this.setState({message: ''});
+    socket.speak(this.props.user.name, msg);
 
-    socket.emit('msg', {
-      from: this.props.user.name,
-      text: msg
-    });
+    // socket.emit('msg', {
+    //  from: this.props.user.name,
+    //  text: msg
+    // });
   }
 
   render() {
+    console.log('chat.js render!');
+    console.log(this.state.messages.length);
     const style = require('./Chat.scss');
     const {user} = this.props;
 
@@ -62,7 +83,7 @@ export default class Chat extends Component {
         <div>
           <ul>
           {this.state.messages.map((msg) => {
-            return <li key={`chat.msg.${msg.id}`}>{msg.from}: {msg.text}</li>;
+            return <li key={`chat.msg.${msg.id}`}>{msg.user_name}: {msg.content}</li>;
           })}
           </ul>
           <form className="login-form" onSubmit={this.handleSubmit}>

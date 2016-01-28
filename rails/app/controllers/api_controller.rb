@@ -11,4 +11,8 @@ class ApiController < ApplicationController
   def res
     render :json => { name: params[:name] }
   end
+
+  def logout
+   render :json => { name: "logout ok" }
+  end  
 end

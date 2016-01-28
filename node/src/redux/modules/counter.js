@@ -5,6 +5,7 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
+  console.log('increment reducer');
   switch (action.type) {
     case INCREMENT:
       const {count} = state;
@@ -17,6 +18,7 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function increment() {
+  console.log('increment!');
   return {
     type: INCREMENT
   };

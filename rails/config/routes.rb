@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/loadInfo' => 'api#loadInfo'
   get '/loadAuth' => 'api#loadAuth'
   post '/login' => 'api#res'
+  get '/logout' => 'api#logout'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

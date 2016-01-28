@@ -2,12 +2,11 @@ import Cable from 'es6-actioncable';
 
 class _ActionCable {
   constructor() {
-    alert('ActionCable constructor');
   }
 
   connect() {
     console.log('connecting websocket');
-    this.consumer = Cable.createConsumer('rails.docker:8000/cable');
+    this.consumer = Cable.createConsumer('ws://rails.docker:8000/cable');
   }
 
   getConsumer() {

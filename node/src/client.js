@@ -8,13 +8,14 @@ import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
 import getRoutes from './routes';
 import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
 import ActionCable from './helpers/ActionCable';
+import { load as msgLoad } from './redux/modules/message';
 
 const client = new ApiClient();
 
@@ -25,12 +26,13 @@ const scrollableHistory = useScroll(createHistory);
 const dest = document.getElementById('content');
 const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollableHistory, client, window.__data);
 
+/*
 function initSocket() {
   const socket = io('', {path: '/ws'});
   // const socket = io('rails.docker:8000', {path: '/cable'});
   socket.on('news', (data) => {
     console.log(data);
-    socket.emit('my other event', { my: 'data from client' });
+    // socket.emit('my other event', { my: 'data from client' });
   });
   socket.on('msg', (data) => {
     console.log(data);
@@ -39,46 +41,40 @@ function initSocket() {
   return socket;
 }
 
-global.socket = initSocket();
+// global.socket = initSocket();
+ */
 
-global.room = ActionCable.constructor();
-global.room.getConsumer().subscriptions.create('RoomChannel', {
+global.socket = new ActionCable().getConsumer().subscriptions.create('RoomChannel', {
   connected: function() {
-    alert('connect!');
+    console.log('connect!');
   },
   disconnected: function() {},
   received: function(data) {
     console.log('ActionCable received');
-    return console.log(data.message);
+    if (data) {
+      console.log(data.message);
+      store.dispatch(msgLoad(data.message));
+    } else {
+      console.log(data);
+    }
   },
-  speak: function(message) {
+  all: function() {
+    return this.perform('all', {});
+  },
+  speak: function(user, message) {
+    console.log(message);
     return this.perform('speak', {
+      user_name: user,
       message: message
     });
   }
 });
-
-global.room.speak('from node');
-/*
-class MyChannel {
-  constructor() {
-  }
-  subscribe() {
-    this.subscription = WebSocket.getConsumer().subscriptions.create("MyChannel", {
-      connected: function () {
-        console.log('connected to mychannel');
-      },
-      received: function (data) {
-        //do stuff with data
-      }
-    });
-  }
-  unsubscribe() {
-    if(this.subscription)
-      this.subscription.unsubscribe();
-  }
+function ttt() {
+  // global.room.speak('from node');
+  // global.room.all();
 }
-*/
+setTimeout(ttt, 2000);
+
 const component = (
   <ReduxRouter routes={getRoutes(store)} />
 );

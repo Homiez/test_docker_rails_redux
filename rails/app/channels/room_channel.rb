@@ -9,7 +9,11 @@ class RoomChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
+  def all
+     ReplyBroadcastJob.perform_later Message.all.to_json
+  end
+
   def speak(data)
-    Message.create! content: data['message']
+    Message.create! user_name: data['user_name'], content: data['message']
   end
 end
