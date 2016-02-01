@@ -10,7 +10,8 @@ function formatUrl(path) {
     return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
   }
   // Prepend `/api` to relative URL, to proxy to API server.
-  return '/api' + adjustedPath;
+  // return '/api' + adjustedPath;
+  return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
 }
 
 /*
@@ -24,6 +25,9 @@ class _ApiClient {
     methods.forEach((method) =>
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
+        // 以下の２つを追加でpostが可能に
+        request.set('Accept', 'application/json');
+        request.type('form');
         if (params) {
           request.query(params);
         }
@@ -33,12 +37,11 @@ class _ApiClient {
         }
 
         if (data) {
-          console.log('reduckkkkkkkkkkkkkkkk send data');
+          console.log('ApiClient JS send data');
           console.log(resolve);
           console.log(data);
           request.send(data);
         }
-
         request.end((err, { body } = {}) => err ? reject(body || err) : resolve(body));
       }));
   }

@@ -34,10 +34,11 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
 app.use(Express.static(path.join(__dirname, '..', 'static')));
 
-// Proxy to API server
-app.use('/api', (req, res) => {
-  proxy.web(req, res, {target: targetUrl});
-});
+// Proxy to API server 停止
+// app.use('/api', (req, res) => {
+//   console.log("Proxy to API server %s", targetUrl);
+//  proxy.web(req, res, {target: targetUrl});
+// });
 
 app.use('/ws', (req, res) => {
   proxy.web(req, res, {target: targetUrl + '/ws'});

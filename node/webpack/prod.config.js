@@ -82,8 +82,8 @@ module.exports = {
       compress: {
         warnings: false
       }
-    }),
+    }) // ,
 
-    webpackIsomorphicToolsPlugin
+    // webpackIsomorphicToolsPlugin
   ]
 };
