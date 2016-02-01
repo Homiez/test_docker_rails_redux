@@ -18,7 +18,7 @@ module.exports = {
   devtool: 'source-map',
   context: path.resolve(__dirname, '..'),
   entry: {
-    'main': [
+    'app': [
       'bootstrap-sass!./src/theme/bootstrap.config.prod.js',
       'font-awesome-webpack!./src/theme/font-awesome.config.prod.js',
       './src/client.js'
@@ -26,7 +26,7 @@ module.exports = {
   },
   output: {
     path: assetsPath,
-    filename: '[name]-[chunkhash].js',
+    filename: '[name].js',
     chunkFilename: '[name]-[chunkhash].js',
     publicPath: '/dist/'
   },
@@ -56,7 +56,7 @@ module.exports = {
     new CleanPlugin([relativeAssetsPath]),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
+    new ExtractTextPlugin('[name].css', {allChunks: true}),
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
