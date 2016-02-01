@@ -1,0 +1,108 @@
+/*
+ *
+ * common styles
+ *
+ */
+
+// --------------------------------------
+// Reasonwhy original font
+// example: <i class="rw rw-wl-logo"></i>
+// --------------------------------------
+
+@font-face {
+  font-family: 'Reasonwhy';
+  src: url('./fonts/Reasonwhy.eot');
+  src: url('./fonts/Reasonwhy.eot') format('embedded-opentype'),
+       url('./fonts/Reasonwhy.ttf') format('truetype'),
+       url('./fonts/Reasonwhy.woff') format('woff'),
+       url('./fonts/Reasonwhy.svg') format('svg');
+}
+.rw {
+  font-family: 'Reasonwhy' !important;
+  font-style: normal;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  speak: none;
+  // Better Font Rendering
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &.rw-return:before {
+      content: "\76";
+  }
+  &.rw-visiting:before {
+      content: "\75";
+  }
+  &.rw-people:before {
+      content: "\74";
+  }
+  &.rw-fm-logo:before {
+      content: "\73";
+  }
+  &.rw-wl-logo:before {
+      content: "\61";
+  }
+  &.rw-shine:before {
+      content: "\62";
+  }
+  &.rw-shined:before {
+      content: "\63";
+  }
+  &.rw-balloons:before {
+      content: "\64";
+  }
+  &.rw-peoples:before {
+      content: "\65";
+  }
+  &.rw-bldg:before {
+      content: "\66";
+  }
+  &.rw-commented:before {
+      content: "\67";
+  }
+  &.rw-comment:before {
+      content: "\68";
+  }
+  &.rw-doctor:before {
+      content: "\69";
+  }
+  &.rw-crown:before {
+      content: "\6a";
+  }
+  &.rw-society2:before {
+      content: "\6b";
+  }
+  &.rw-society:before {
+      content: "\6c";
+  }
+  &.rw-government-office:before {
+      content: "\6d";
+  }
+  &.rw-menu:before {
+      content: "\6e";
+  }
+  &.rw-stethoscope:before {
+      content: "\6f";
+  }
+  &.rw-x:before {
+      content: "\70";
+  }
+  &.rw-hospital:before {
+      content: "\71";
+  }
+  &.rw-arrow-box:before {
+      content: "\72";
+  }
+  &.rw-jpg-file:before {
+      content: "\77";
+  }
+  &.rw-pdf-file:before {
+      content: "\78";
+  }
+  &.rw-png-file:before {
+      content: "\79";
+  }
+}

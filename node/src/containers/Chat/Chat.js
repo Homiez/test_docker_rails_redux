@@ -83,7 +83,7 @@ export default class Chat extends Component {
         <div>
           <ul>
           {this.state.messages.map((msg) => {
-            return <li key={`chat.msg.${msg.id}`}>{msg.user_name}: {msg.content}</li>;
+            return <li key={`chat.msg.${msg.id}`}><i className="rw rw-doctor"/> {msg.user_name}: {msg.content}</li>;
           })}
           </ul>
           <form className="login-form" onSubmit={this.handleSubmit}>
